@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Certificate Verification</title>
+
+  <style>
+  /* --------------------------------
+     Global Reset & Typography
+  -------------------------------- */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f8fafc, #eef2f7);
+    color: #1f2937;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --------------------------------
+     Header
+  -------------------------------- */
+  header {
+    background: #ffffff;
+    padding: 1.4rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  header img.logo {
+    max-height: 50px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }
+
+  header p {
+    margin-top: 4px;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+
+  @media (max-width: 480px) {
+    header img.logo {
+      max-height: 40px;
+    }
+  }
+
+  /* --------------------------------
+     Main Section
+  -------------------------------- */
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+  }
+
+  .card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 2.2rem 2rem;
+    border-radius: 16px;
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.08),
+      0 4px 10px rgba(0, 0, 0, 0.04);
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .card h2 {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  .card .subtitle {
+    text-align: center;
+    font-size: 0.88rem;
+    color: #6b7280;
+    margin-bottom: 1.8rem;
+    line-height: 1.4;
+  }
+
+  /* --------------------------------
+     Input Field
+  -------------------------------- */
+  .input-group {
+    margin-bottom: 1.2rem;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 0.8rem 0.85rem;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  input::placeholder {
+    color: #9ca3af;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+
+  /* --------------------------------
+     Buttons
+  -------------------------------- */
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+  }
+
+  button:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  .download-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    margin-top: 0.9rem;
+  }
+
+  .download-btn:hover {
+    box-shadow: 0 8px 18px rgba(16, 185, 129, 0.3);
+  }
+
+  /* --------------------------------
+     Loading & Result States
+  -------------------------------- */
+  .loading {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-size: 0.88rem;
+    color: #6b7280;
+    animation: pulse 1.2s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
+
+  .result {
+    margin-top: 1.6rem;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+  }
+
+  .result.success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+  }
+
+  .result.error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    text-align: center;
+  }
+
+  .result p {
+    margin-bottom: 0.45rem;
+    line-height: 1.4;
+  }
+
+  /* --------------------------------
+     Footer
+  -------------------------------- */
+  footer {
+    padding: 0.9rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: #6b7280;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+
+  .loading {
+    display: none;
+  }
+
+  /* --------------------------------
+     Mobile Adjustments
+  -------------------------------- */
+  @media (max-width: 480px) {
+    .card {
+      padding: 1.8rem 1.5rem;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="logo.png" alt="Techspark Club Logo" class="logo" />
+    <p>Think • Build • Spark</p>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="card">
+      <h2>E-Certificate Verification</h2>
+      <p class="subtitle">
+        Enter your certificate number to download your certificate
+      </p>
+
+      <div class="input-group">
+        <input
+          type="text"
+          id="certificateInput"
+          placeholder="Enter Certificate Number"
+          required
+        />
+      </div>
+
+      <button onclick="searchCertificate()">Search</button>
+
+      <div class="loading" id="loadingText">Searching certificate...</div>
+
+      <div class="result" id="resultBox"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    Powered by Techspark Club || Developed by Praveen M - Creative Head, Techspark
+  </footer>
+
+  <script>
+  /* -----------------------------------
+     CONFIG: Google Apps Script API URL
+     ----------------------------------- */
+  const API_URL = "https://script.google.com/macros/s/AKfycbwtc5QI1sbqSCjKuiLR389C65SJncHH2uamc6Fslf8cc2izl05zvqpMYGGMtvaxc6f7/exec";
+
+  /* -----------------------------------
+     Search Certificate Function
+     ----------------------------------- */
+  async function searchCertificate() {
+    const input = document.getElementById("certificateInput").value.trim();
+    const loading = document.getElementById("loadingText");
+    const resultBox = document.getElementById("resultBox");
+
+    // Reset UI
+    resultBox.style.display = "none";
+    resultBox.innerHTML = "";
+
+    // Input validation
+    if (input === "") {
+      resultBox.className = "result error";
+      resultBox.textContent = "Please enter a certificate number.";
+      resultBox.style.display = "block";
+      return;
+    }
+
+    // Show loading
+    loading.style.display = "block";
+
+    try {
+      // Fetch from Google Apps Script
+      const response = await fetch(`${API_URL}?certificate=${encodeURIComponent(input)}`);
+
+      if (!response.ok) {
+        throw new Error("Server error");
+      }
+
+      const data = await response.json();
+
+      loading.style.display = "none";
+
+      if (data.status === "success") {
+        resultBox.className = "result success";
+        resultBox.innerHTML = `
+          <p><strong>Status:</strong> Certificate Found</p>
+          <p><strong>Student Name:</strong> ${data.name}</p>
+          <p><strong>Event:</strong> ${data.event}</p>
+          <button class="download-btn" onclick="window.open('${data.link}', '_blank')">
+            View / Download Certificate
+          </button>
+        `;
+      } else {
+        resultBox.className = "result error";
+        resultBox.textContent = data.message || "Certificate not found.";
+      }
+
+    } catch (error) {
+      loading.style.display = "none";
+      resultBox.className = "result error";
+      resultBox.textContent = "Something went wrong. Please try again later.";
+    }
+
+    resultBox.style.display = "block";
+  }
+  </script>
+
+</body>
+</html>
